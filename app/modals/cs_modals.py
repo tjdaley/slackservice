@@ -4,8 +4,43 @@ cs_modals.py - Creates modal dialogs for the child support slash command.
 Copyright (c) 2020 by Thomas J. Daley, J.D.
 """
 
+
 class CsModals(object):
-    def param_modal(self, trigger_id, callback_id):
+    @staticmethod
+    def param_model(trigger_id: str) -> dict:
+        """
+        Return dict that specifies a modal dialog to retrieve
+        input parameters to compute child support.
+
+        Args:
+            trigger_id (str): Received from interaction.
+
+        Returns:
+            (dict): Slack modal dialog specification
+        """
+        return {
+            'trigger_id': trigger_id,
+            'view': {
+                'type': 'modal',
+                'callback_id': 'cs_param_modal',
+                'title': {
+                    'type': 'plain_text',
+                    'text': "Child Support Calculation"
+                },
+                'blocks': [
+                    {
+                        'type': 'input',
+                        'label': "Income amount",
+                        'element': 'plain_text_input',
+                        'block_id': 'income_amount',
+                        'hint': "Enter the obligor's income",
+                        'optional': False
+                    }
+                ]
+            }
+        }
+
+    def param_modalx(self, trigger_id, callback_id):
         return {
             'trigger_id': trigger_id,
             'dialog': {

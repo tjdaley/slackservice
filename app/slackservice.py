@@ -27,8 +27,7 @@ def slack_slash_cs():
             print(f"{token} = {request.form[token]}")
 
         trigger_id = request.form['trigger_id']
-        callback_id = 'cs_calc'
-        dialog = CsModals.param_modal(None, trigger_id, callback_id)
+        dialog = CsModals.param_modal(trigger_id)
 
         return(jsonify(dialog))
 
