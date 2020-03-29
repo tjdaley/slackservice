@@ -1,3 +1,10 @@
+# Virtual Environment Folders
+/app/bin/
+/app/share/
+/app/lib64
+/app/pyvenv.cfg
+# Personalization that can be platform-dependent
+/.vscode/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

@@ -7,6 +7,8 @@ from flask import Flask, jsonify, request
 import os
 import dotenv
 
+from modals.cs_modals import CsModals
+
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
 dotenv.load_dotenv(dotenv_path)
 VERIFICATION_TOKEN = os.environ['VERIFICATION_TOKEN']
@@ -20,7 +22,15 @@ def slack_slash_cs():
         payload = {
             'text': "Hi, Tom. Would you like to play a game?"
         }
-        return(jsonify(payload))
+
+        for token in request.form:
+            print(f"{token} = {request.form[token]}")
+
+        trigger_id = request.form['trigger_id']
+        callback_id = 'cs_calc'
+        dialog = CsModals.param_modal(None, trigger_id, callback_id)
+
+        return(jsonify(dialog))
 
 
 if __name__ == '__main__':
