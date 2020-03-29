@@ -1,0 +1,192 @@
+{
+    "type": "modal",
+    "title": {
+        "type": "plain_text",
+        "text": "Calculate Child Support",
+        "emoji": true
+    },
+    "submit": {
+        "type": "plain_text",
+        "text": "Calculate",
+        "emoji": true
+    },
+    "close": {
+        "type": "plain_text",
+        "text": "Cancel",
+        "emoji": true
+    },
+    "blocks": [
+        {
+            "type": "input",
+            "label": {
+                "type": "plain_text",
+                "text": ":moneybag: Income amount",
+                "emoji": true
+            },
+            "element": {
+                "type": "plain_text_input",
+                "action_id": "income_amount",
+                "placeholder": {
+                    "type": "plain_text",
+                    "text": "$10,000"
+                }
+            }
+        },
+        {
+            "type": "input",
+            "label": {
+                "type": "plain_text",
+                "text": ":calendar: Pay frequency",
+                "emoji": true
+            },
+            "element": {
+                "type": "static_select",
+                "action_id": "income_frequency",
+                "placeholder": {
+                    "type": "plain_text",
+                    "text": "(select)"
+                },
+                "options": [
+                    {
+                        "text": {
+                            "type": "plain_text",
+                            "text": "Monthly"
+                        },
+                        "value": "12"
+                    },
+                    {
+                        "text": {
+                            "type": "plain_text",
+                            "text": "Semi-Monthly"
+                        },
+                        "value": "24"
+                    },
+                    {
+                        "text": {
+                            "type": "plain_text",
+                            "text": "Bi-Weekly"
+                        },
+                        "value": "26"
+                    },
+                    {
+                        "text": {
+                            "type": "plain_text",
+                            "text": "Weekly"
+                        },
+                        "value": "52"
+                    }
+                ]
+            }
+        },
+        {
+            "type": "input",
+            "label": {
+                "type": "plain_text",
+                "text": ":medical_symbol: Children's medical insurance",
+                "emoji": true
+            },
+            "element": {
+                "type": "plain_text_input",
+                "action_id": "medical_amount",
+                "placeholder": {
+                    "type": "plain_text",
+                    "text": "$350"
+                }
+            }
+        },
+        {
+            "type": "input",
+            "label": {
+                "type": "plain_text",
+                "text": ":smiley: Children's dental insurance",
+                "emoji": true
+            },
+            "element": {
+                "type": "plain_text_input",
+                "action_id": "dental_amount",
+                "placeholder": {
+                    "type": "plain_text",
+                    "text": "$350"
+                }
+            }
+        },
+        {
+            "type": "input",
+            "label": {
+                "type": "plain_text",
+                "text": ":calendar: Insurance frequency",
+                "emoji": true
+            },
+            "element": {
+                "type": "static_select",
+                "action_id": "insurance_frequency",
+                "placeholder": {
+                    "type": "plain_text",
+                    "text": "(select)"
+                },
+                "options": [
+                    {
+                        "text": {
+                            "type": "plain_text",
+                            "text": "Monthly"
+                        },
+                        "value": "12"
+                    },
+                    {
+                        "text": {
+                            "type": "plain_text",
+                            "text": "Semi-Monthly"
+                        },
+                        "value": "24"
+                    },
+                    {
+                        "text": {
+                            "type": "plain_text",
+                            "text": "Bi-Weekly"
+                        },
+                        "value": "26"
+                    },
+                    {
+                        "text": {
+                            "type": "plain_text",
+                            "text": "Weekly"
+                        },
+                        "value": "52"
+                    }
+                ]
+            }
+        },
+        {
+            "type": "input",
+            "label": {
+                "type": "plain_text",
+                "text": ":baby_symbol: Children before the court",
+                "emoji": true
+            },
+            "element": {
+                "type": "plain_text_input",
+                "action_id": "children_inside",
+                "placeholder": {
+                    "type": "plain_text",
+                    "text": "1"
+                }
+            }
+        },
+        {
+            "type": "input",
+            "label": {
+                "type": "plain_text",
+                "text": ":baby_symbol: Children outside the action",
+                "emoji": true
+            },
+            "element": {
+                "type": "plain_text_input",
+                "action_id": "children_outside",
+                "placeholder": {
+                    "type": "plain_text",
+                    "text": "1"
+                }
+            }
+        }
+    ]
+}
