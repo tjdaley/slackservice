@@ -1,5 +1,6 @@
 {
     "type": "modal",
+    "callback_id": "calculate_child_support",
     "title": {
         "type": "plain_text",
         "text": "Calculate Child Support",
@@ -26,10 +27,7 @@
             "element": {
                 "type": "plain_text_input",
                 "action_id": "income_amount",
-                "placeholder": {
-                    "type": "plain_text",
-                    "text": "$10,000"
-                }
+                "placeholder": {"type": "plain_text", "text": "Enter income amount in dollars"}
             }
         },
         {
@@ -42,37 +40,32 @@
             "element": {
                 "type": "static_select",
                 "action_id": "income_frequency",
-                "placeholder": {
-                    "type": "plain_text",
-                    "text": "(select)"
+                "initial_option": {
+                    "text": {
+                        "type": "plain_text",
+                        "text": "Monthly"
+                    },
+                    "value": "12"
                 },
                 "options": [
                     {
-                        "text": {
-                            "type": "plain_text",
-                            "text": "Monthly"
-                        },
+                        "text": {"type": "plain_text", "text": "Annually"},
+                        "value": "1"
+                    },
+                    {
+                        "text": {"type": "plain_text", "text": "Monthly"},
                         "value": "12"
                     },
                     {
-                        "text": {
-                            "type": "plain_text",
-                            "text": "Semi-Monthly"
-                        },
+                        "text": {"type": "plain_text", "text": "Semi-Monthly"},
                         "value": "24"
                     },
                     {
-                        "text": {
-                            "type": "plain_text",
-                            "text": "Bi-Weekly"
-                        },
+                        "text": {"type": "plain_text", "text": "Bi-Weekly"},
                         "value": "26"
                     },
                     {
-                        "text": {
-                            "type": "plain_text",
-                            "text": "Weekly"
-                        },
+                        "text": {"type": "plain_text", "text": "Weekly"},
                         "value": "52"
                     }
                 ]
@@ -80,6 +73,7 @@
         },
         {
             "type": "input",
+            "optional": true,
             "label": {
                 "type": "plain_text",
                 "text": ":medical_symbol: Children's medical insurance",
@@ -88,14 +82,12 @@
             "element": {
                 "type": "plain_text_input",
                 "action_id": "medical_amount",
-                "placeholder": {
-                    "type": "plain_text",
-                    "text": "$350"
-                }
+                "placeholder": {"type": "plain_text", "text": "0"}
             }
         },
         {
             "type": "input",
+            "optional": true,
             "label": {
                 "type": "plain_text",
                 "text": ":smiley: Children's dental insurance",
@@ -106,12 +98,13 @@
                 "action_id": "dental_amount",
                 "placeholder": {
                     "type": "plain_text",
-                    "text": "$350"
+                    "text": "0"
                 }
             }
         },
         {
             "type": "input",
+            "optional": true,
             "label": {
                 "type": "plain_text",
                 "text": ":calendar: Insurance frequency",
@@ -120,37 +113,29 @@
             "element": {
                 "type": "static_select",
                 "action_id": "insurance_frequency",
-                "placeholder": {
-                    "type": "plain_text",
-                    "text": "(select)"
+                "initial_option": {
+                    "text": {"type": "plain_text", "text": "Monthly"},
+                    "value": "12"
                 },
                 "options": [
                     {
-                        "text": {
-                            "type": "plain_text",
-                            "text": "Monthly"
-                        },
+                        "text": {"type": "plain_text", "text": "Annually"},
+                        "value": "1"
+                    },
+                    {
+                        "text": {"type": "plain_text", "text": "Monthly"},
                         "value": "12"
                     },
                     {
-                        "text": {
-                            "type": "plain_text",
-                            "text": "Semi-Monthly"
-                        },
+                        "text": {"type": "plain_text", "text": "Semi-Monthly"},
                         "value": "24"
                     },
                     {
-                        "text": {
-                            "type": "plain_text",
-                            "text": "Bi-Weekly"
-                        },
+                        "text": {"type": "plain_text", "text": "Bi-Weekly"},
                         "value": "26"
                     },
                     {
-                        "text": {
-                            "type": "plain_text",
-                            "text": "Weekly"
-                        },
+                        "text": {"type": "plain_text", "text": "Weekly"},
                         "value": "52"
                     }
                 ]
@@ -166,14 +151,15 @@
             "element": {
                 "type": "plain_text_input",
                 "action_id": "children_inside",
-                "placeholder": {
-                    "type": "plain_text",
-                    "text": "1"
-                }
+                "placeholder": {"type": "plain_text", "text": "Enter number of children"}
             }
         },
         {
+            "type": "divider"
+        },
+        {
             "type": "input",
+            "optional": true,
             "label": {
                 "type": "plain_text",
                 "text": ":baby_symbol: Children outside the action",
@@ -182,10 +168,87 @@
             "element": {
                 "type": "plain_text_input",
                 "action_id": "children_outside",
-                "placeholder": {
-                    "type": "plain_text",
-                    "text": "1"
-                }
+                "placeholder": {"type": "plain_text", "text": "0"}
+            }
+        },
+        {
+            "type": "input",
+            "optional": true,
+            "label": {
+                "type": "plain_text",
+                "text": ":question: Self employed?",
+                "emoji": true
+            },
+            "element": {
+                "type": "static_select",
+                "action_id": "self_employed",
+                "initial_option": {
+                    "text": {"type": "plain_text", "text": "NO"},
+                    "value": "NO"
+                },
+                "options": [
+                    {
+                        "text": {"type": "plain_text", "text": "NO"},
+                        "value": "NO"
+                    },
+                    {
+                        "text": {"type": "plain_text", "text": "YES"},
+                        "value": "YES"
+                    }
+                ]
+            }
+        },
+        {
+            "type": "input",
+            "optional": true,
+            "label": {
+                "type": "plain_text",
+                "text": ":hammer_and_wrench: Union dues",
+                "emoji": true
+            },
+            "element": {
+                "type": "plain_text_input",
+                "action_id": "union_dues_amount",
+                "placeholder": {"type": "plain_text", "text": "0"}
+            }
+        },
+        {
+            "type": "input",
+            "optional": true,
+            "label": {
+                "type": "plain_text",
+                "text": ":calendar: Union dues frequency",
+                "emoji": true
+            },
+            "element": {
+                "type": "static_select",
+                "action_id": "union_dues_frequency",
+                "initial_option": {
+                    "text": {"type": "plain_text", "text": "Monthly"},
+                    "value": "12"
+                },
+                "options": [
+                    {
+                        "text": {"type": "plain_text", "text": "Annually"},
+                        "value": "1"
+                    },
+                    {
+                        "text": {"type": "plain_text", "text": "Monthly"},
+                        "value": "12"
+                    },
+                    {
+                        "text": {"type": "plain_text", "text": "Semi-Monthly"},
+                        "value": "24"
+                    },
+                    {
+                        "text": {"type": "plain_text", "text": "Bi-Weekly"},
+                        "value": "26"
+                    },
+                    {
+                        "text": {"type": "plain_text", "text": "Weekly"},
+                        "value": "52"
+                    }
+                ]
             }
         }
     ]

@@ -1,0 +1,22 @@
+{
+    "type": "modal",
+    "callback_id": "dismiss_all_modals",
+    "title": {"type": "plain_text", "text": "Child Support Result"},
+    "submit": {"type": "plain_text", "text": "Close all"},
+    "blocks": [
+        {
+            "type": "context",
+            "elements": [
+                {
+                    "type": "image",
+                    "image_url": "https://p0.pikrepo.com/preview/434/923/calculate-statistics-means-charting-figures-and-calculator.jpg",
+                    "alt_text": "calculator"
+                },
+                {
+                    "type": "mrkdwn",
+                    "text": "Guideline child support is **{}**."
+                }
+            ]
+        }
+    ]
+}
