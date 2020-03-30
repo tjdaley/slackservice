@@ -108,22 +108,20 @@ def push_view(dialog: dict):
 @app.route('/slack/slash/cs', methods=['POST'])
 @is_verified_message
 def slack_slash_cs():
-    if request.form['token'] == VERIFICATION_TOKEN:
-        # Handle periodic SSL checks from Slack
-        if 'ssl_check' in request.form and request.form['ssl_check'] == '1':
-            return('', 204)
-        # dump_form()
-
-        user_id = request.form['user_id']
-        channel_id = request.form['channel_id']
-        response_url = request.form['response_url']
-        CHANNELS[user_id] = channel_id
-        RESPONSE_URLS[user_id] = response_url
-
-        trigger_id = request.form['trigger_id']
-        modal = CsModals.param_modal(trigger_id)
-        open_view(modal)
+    if 'ssl_check' in request.form and request.form['ssl_check'] == '1':
         return('', 204)
+    # dump_form()
+
+    user_id = request.form['user_id']
+    channel_id = request.form['channel_id']
+    response_url = request.form['response_url']
+    CHANNELS[user_id] = channel_id
+    RESPONSE_URLS[user_id] = response_url
+
+    trigger_id = request.form['trigger_id']
+    modal = CsModals.param_modal(trigger_id)
+    open_view(modal)
+    return('', 204)
 
 
 @app.route('/slack/interactive', methods=['POST'])
