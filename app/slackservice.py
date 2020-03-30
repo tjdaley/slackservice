@@ -19,7 +19,6 @@ from util.gather_input import InputGatherer
 
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
 dotenv.load_dotenv(dotenv_path)
-VERIFICATION_TOKEN = os.environ['VERIFICATION_TOKEN']
 SIGNING_SECRET = str(os.environ['SLACK_SIGNING_SECRET'])
 CLIENT_ID = os.environ['CLIENT_ID']
 SLACK_URL = os.environ['SLACK_API_ENDPOINT']
