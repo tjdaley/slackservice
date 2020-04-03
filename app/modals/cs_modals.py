@@ -222,6 +222,12 @@ def supply_defaults(user_data):
         'children_outside': "0",
         'union_dues_amount': "0"
     }
+    # Supply defaults for extant keys with missing values
     for key, value in user_data.items():
         if not value or value == '':
             user_data[key] = defaults.get(key, None)
+
+    # Supply defaults for missing keys
+    for key, value in defaults.items():
+        if key not in user_data:
+            user_data[key] = value

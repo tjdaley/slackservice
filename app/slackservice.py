@@ -90,6 +90,13 @@ def post_message(message: dict):
     print('*'*40, '\n\n', result.text, '\n\n', '*'*40)
 
 
+def post_ephemeral(message: dict):
+    headers = slack_headers()
+    url = f'{SLACK_URL}/chat.postEphemeral'
+    result = req.post(url, data=json.dumps(message), headers=headers)
+    print('*'*40, '\n\n', result.text, '\n\n', '*'*40)
+
+
 def open_view(dialog: dict):
     headers = slack_headers()
     url = f'{SLACK_URL}/views.open'
@@ -104,12 +111,23 @@ def push_view(dialog: dict):
     print('*'*40, '\n\n', result.text, '\n\n', '*'*40)
 
 
+@app.route('/slack/event', methods=['POST'])
+@is_verified_message
+def slack_event():
+    body = request.get_json()
+    if 'challenge' in body:
+        return(body['challenge'], 200)
+
+    print(json.dumps(body, indent=4))
+
+    return('', 204)
+
 @app.route('/slack/slash/cs', methods=['POST'])
 @is_verified_message
 def slack_slash_cs():
     if 'ssl_check' in request.form and request.form['ssl_check'] == '1':
         return('', 204)
-    # dump_form()
+    dump_form()
 
     user_id = request.form['user_id']
     channel_id = request.form['channel_id']
@@ -119,6 +137,27 @@ def slack_slash_cs():
 
     trigger_id = request.form['trigger_id']
     modal = CsModals.param_modal(trigger_id)
+
+    # See if user provided some parameters
+    # p1 = Gross income (required)
+    # p2 = Number of children inside the action (required)
+    # p3 = Number of children outside the action (optional)
+    if request.form['text'].strip():
+        params = [p for p in request.form['text'].split(' ') if p]
+        if len(params) < 2:
+            return("You must supply at least the gross monthly income and number of children inside the action.")
+        user_input = {
+            'income_amount': params[0],
+            'children_inside': params[1],
+        }
+        if len(params) > 2:
+            user_input['children_outside'] = params[2]
+        CsModals.calculate_child_support(user_input)
+        message = child_support_report(user_input)
+        return(message)
+    else:
+        print("User provided NO parameters.")
+
     open_view(modal)
     return('', 204)
 
@@ -134,6 +173,17 @@ def slack_interactive():
     # dump_dict(user_input)
     CsModals.calculate_child_support(user_input)
     # dump_dict(user_input)
+    message = child_support_report(user_input)
+    attachment = {
+        'channel': user_id,
+        'user': user_id,
+        'text': message,
+    }
+    post_ephemeral(attachment)
+    return('', 204)
+
+
+def child_support_report(user_input: dict) -> str:
     money_amount = locale.currency(user_input['child_support_monthly'], grouping=True)
 
     title_len = 25
@@ -146,6 +196,7 @@ def slack_interactive():
     ft_t = "      Federal Income Tax".ljust(title_len)
     ud_t = "      Union Dues".ljust(title_len)
     nr_t = "Net Resources".ljust(title_len)
+    sf_t = "Support factor".ljust(title_len)
     mg_d = locale.currency(user_input['gross_income_monthly'], grouping=True).rjust(data_len)
     ss_d = locale.currency(-user_input['social_sec_monthly'], grouping=True).rjust(data_len)
     mc_d = locale.currency(-user_input['medicare_monthly'], grouping=True).rjust(data_len)
@@ -154,6 +205,8 @@ def slack_interactive():
     ft_d = locale.currency(-user_input['income_tax_monthly'], grouping=True).rjust(data_len)
     ud_d = locale.currency(-user_input['union_dues_monthly'], grouping=True).rjust(data_len)
     nr_d = locale.currency(user_input['net_resources_monthly'], grouping=True).rjust(data_len)
+    sf_p = f"{user_input['support_factor']:.2f}%".rjust(data_len)
+
     message = f"Guideline child support: {money_amount}/month.\n" + \
               f"```{mg_t} {mg_d}\n" + \
               f"{ss_t} {ss_d}\n" + \
@@ -163,14 +216,12 @@ def slack_interactive():
               f"{ft_t} {ft_d}\n" + \
               f"{ud_t} {ud_d}\n" + \
               "" + '-'*(title_len+data_len+1) + "\n" + \
-              f"{nr_t} {nr_d}\n```"
-    message = {
-        'text': message,
-        'response_type': 'ephmeral',
-        'channel': channel_id
-    }
-    post_message(message)
-    return('', 204)
+              f"{nr_t} {nr_d}\n" + \
+              f"{sf_t} {sf_p}\n```"
+
+    return message
+
+
 
 
 if __name__ == '__main__':
