@@ -205,7 +205,7 @@ def child_support_report(user_input: dict) -> str:
     ft_d = locale.currency(-user_input['income_tax_monthly'], grouping=True).rjust(data_len)
     ud_d = locale.currency(-user_input['union_dues_monthly'], grouping=True).rjust(data_len)
     nr_d = locale.currency(user_input['net_resources_monthly'], grouping=True).rjust(data_len)
-    sf_p = f"{user_input['support_factor']:.2f}%".rjust(data_len)
+    sf_p = f"{user_input['support_factor']*100:.1f}%".rjust(data_len)
 
     message = f"Guideline child support: {money_amount}/month.\n" + \
               f"```{mg_t} {mg_d}\n" + \
