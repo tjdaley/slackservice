@@ -22,6 +22,7 @@ dotenv.load_dotenv(dotenv_path)
 SIGNING_SECRET = str(os.environ['SLACK_SIGNING_SECRET'])
 CLIENT_ID = os.environ['CLIENT_ID']
 SLACK_URL = os.environ['SLACK_API_ENDPOINT']
+DEBUG = os.environ.get('APP_DEBUG', '0') == '1'
 CHANNELS = {}
 RESPONSE_URLS = {}
 
@@ -37,6 +38,9 @@ def dump_dict(d):
 
 
 def dump_form():
+    if not DEBUG:
+        return
+
     for token in request.form:
         print(f"{token} = {request.form[token]}")
 
@@ -87,28 +91,32 @@ def post_message(message: dict):
     headers = slack_headers()
     url = f'{SLACK_URL}/chat.postMessage'
     result = req.post(url, data=json.dumps(message), headers=headers)
-    print('*'*40, '\n\n', result.text, '\n\n', '*'*40)
+    if DEBUG:
+        print('*'*40, '\n\n', result.text, '\n\n', '*'*40)
 
 
 def post_ephemeral(message: dict):
     headers = slack_headers()
     url = f'{SLACK_URL}/chat.postEphemeral'
     result = req.post(url, data=json.dumps(message), headers=headers)
-    print('*'*40, '\n\n', result.text, '\n\n', '*'*40)
+    if DEBUG:
+        print('*'*40, '\n\n', result.text, '\n\n', '*'*40)
 
 
 def open_view(dialog: dict):
     headers = slack_headers()
     url = f'{SLACK_URL}/views.open'
     result = req.post(url, data=json.dumps(dialog), headers=headers)
-    print('*'*40, '\n\n', result.text, '\n\n', '*'*40)
+    if DEBUG:
+        print('*'*40, '\n\n', result.text, '\n\n', '*'*40)
 
 
 def push_view(dialog: dict):
     headers = slack_headers()
     url = f'{SLACK_URL}/views.push'
     result = req.post(url, data=json.dumps(dialog), headers=headers)
-    print('*'*40, '\n\n', result.text, '\n\n', '*'*40)
+    if DEBUG:
+        print('*'*40, '\n\n', result.text, '\n\n', '*'*40)
 
 
 @app.route('/slack/event', methods=['POST'])
@@ -118,7 +126,8 @@ def slack_event():
     if 'challenge' in body:
         return(body['challenge'], 200)
 
-    print(json.dumps(body, indent=4))
+    if DEBUG:
+        print(json.dumps(body, indent=4))
 
     return('', 204)
 
