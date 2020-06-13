@@ -164,21 +164,21 @@ def clean_data(user_data: dict):
 
 def edit_data(user_data: dict):
     user_data['income_amount'] = user_data['income_amount'] \
-                                 .replace('$', '') \
-                                 .replace(',', '') \
-                                 .strip()
+        .replace('$', '') \
+        .replace(',', '') \
+        .strip()
     user_data['medical_amount'] = user_data['medical_amount'] \
-                                 .replace('$', '') \
-                                 .replace(',', '') \
-                                 .strip()
+        .replace('$', '') \
+        .replace(',', '') \
+        .strip()
     user_data['dental_amount'] = user_data['dental_amount'] \
-                                 .replace('$', '') \
-                                 .replace(',', '') \
-                                 .strip()
+        .replace('$', '') \
+        .replace(',', '') \
+        .strip()
     user_data['union_dues_amount'] = user_data['union_dues_amount'] \
-                                 .replace('$', '') \
-                                 .replace(',', '') \
-                                 .strip()
+        .replace('$', '') \
+        .replace(',', '') \
+        .strip()
     user_data['children_inside'] = user_data['children_inside'].strip()
     user_data['children_outside'] = user_data['children_outside'].strip()
 
